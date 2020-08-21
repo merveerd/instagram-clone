@@ -3,16 +3,31 @@ import {TouchableOpacity, Image} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
+
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+
 import { LOCAL_AUTH_ID, USER } from './actions/types';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
 import Feed from './screens/Feed';
+import AddImage from './screens/AddImage';
 
 import { navigationRef } from './RootNavigation';
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function Home() {
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Feed" component={Feed} />
+      <Tab.Screen name="Add Image" component={AddImage} />
+    </Tab.Navigator>
+  );
+}
+
 
 function Router(props) {
   return (
@@ -34,7 +49,7 @@ function Router(props) {
         />
         <Stack.Screen
           name="Feed"
-          component={Feed}
+          component={Home}
           options={({navigation, route}) => ({
             title: 'Feed',
             headerLeft: null,
@@ -56,6 +71,7 @@ function Router(props) {
         />
       </Stack.Navigator>
     </NavigationContainer>
+
   );
 }
 

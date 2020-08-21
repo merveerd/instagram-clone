@@ -7,14 +7,29 @@ const INITIAL_STATE = {
       location: 'Winterland'
   },
   { 
-    image: require('../assets/feed_2.jpeg'),
-    name: 'Sarah Wilson',
+    image: require('../assets/feed_1.jpg'),
+    name: 'Name 2',
     location: 'Winterland'
 },
 { 
     image: require('../assets/feed_3.jpeg'),
-    name: 'Sarah Wilson',
-    location: 'Winterland'
+    name: 'Name 3',
+    location: ''
+},
+{ 
+  image: require('../assets/feed_3.jpeg'),
+  name: 'Sarah Wilson',
+  location: 'Winterland'
+},
+{ 
+  image: require('../assets/feed_3.jpeg'),
+  name: 'Sarah Wilson',
+  location: 'Winterland'
+},
+{ 
+  image: require('../assets/feed_3.jpeg'),
+  name: 'Sarah Wilson',
+  location: 'Winterland'
 },
 ],
   stories: [],
