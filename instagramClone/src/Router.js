@@ -60,7 +60,7 @@ function Router(props) {
             )
           })}
         />
-         <Stack.Screen
+         {/* <Stack.Screen
           name="Profile"
           component={Profile}
           options={({navigation, route}) => ({
@@ -79,7 +79,7 @@ function Router(props) {
             // </TouchableOpacity>
             // )
           })}
-        />
+        /> */}
         <Stack.Screen
           name="SignIn"
           component={SignIn}
@@ -98,7 +98,7 @@ function Router(props) {
           name="Feed"
           component={Home}
           options={({navigation, route}) => ({
-            title: 'Feed',
+            headerTitle: (   <Image style={{alignSelf: 'center', width:120, height: 20}} source={require('./assets/instagram-text.png')}/>),
             headerLeft: () => (
               <TouchableOpacity
                   onPress={() => {          
