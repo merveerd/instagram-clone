@@ -1,38 +1,85 @@
 import React from 'react';
-import {TouchableOpacity, Image} from 'react-native';
+import {TouchableOpacity, Image, View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
-import { LOCAL_AUTH_ID, USER } from './actions/types';
+import {LOCAL_AUTH_ID, USER} from './actions/types';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
 import Feed from './screens/Feed';
-import AddImage from './screens/AddImage';
-
-import { navigationRef } from './RootNavigation';
-
+import Camera from './screens/Camera';
+import Messages from './screens/Messages';
+import Profile from './screens/Profile';
+import {navigationRef} from './RootNavigation';
+import ImagePicker from 'react-native-image-picker';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
+
+const customTabBarStyle = {
+  tabStyle: { marginTop: 10 }, //?
+}
+
+
 function Home() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator tabBarOptions={customTabBarStyle}>
       <Tab.Screen name="Feed" component={Feed} />
-      <Tab.Screen name="Add Image" component={AddImage} />
+      <Tab.Screen name = "Camera" component = {Feed} options={{
+  tabBarButton: () => (<Camera />)}} />
+
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 }
-
 
 function Router(props) {
   return (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator initialRouteName="SignIn">
+      <Stack.Screen
+          name="Messages"
+          component={Messages}
+          options={({navigation, route}) => ({
+            title: 'Messages',
+            headerLeft: ()=> (
+              <TouchableOpacity
+              onPress={() => {
+              
+                navigation.replace('Feed');
+              }}
+              style={{
+                marginRight: 20,
+              }}>
+             <Text style ={{fontSize: 30, marginLeft: 10}}>{'<'} </Text>
+            </TouchableOpacity>
+            )
+          })}
+        />
+         <Stack.Screen
+          name="Profile"
+          component={Profile}
+          options={({navigation, route}) => ({
+            title: 'Profile',
+            // headerLeft: ()=> (
+            //   <TouchableOpacity
+            //   onPress={() => {
+            //     AsyncStorage.removeItem(LOCAL_AUTH_ID);
+            //     navigation.replace('SignIn');
+                
+            //   }}
+            //   style={{
+            //     marginRight: 20,
+            //   }}>
+            //  <Text style ={{fontSize: 30, marginLeft: 10}}>{'<'} </Text>
+            // </TouchableOpacity>
+            // )
+          })}
+        />
         <Stack.Screen
           name="SignIn"
           component={SignIn}
@@ -52,26 +99,41 @@ function Router(props) {
           component={Home}
           options={({navigation, route}) => ({
             title: 'Feed',
-            headerLeft: null,
-            headerRight: () => (
+            headerLeft: () => (
               <TouchableOpacity
-                  onPress={() => {
-                      AsyncStorage.removeItem(LOCAL_AUTH_ID);
-                      USER.token = null;
-                      navigation.replace('SignIn');
+                  onPress={() => {          
+                    //imagePicker
                   }}
                   style={{
-                      marginRight: 20
+                    marginRight: 20,
+                  }}>
+                  <Image
+                    source={require('./assets/camera.png')}
+                    style={{width: 30, height: 30, marginLeft: 10}}
+                  />
+                </TouchableOpacity>
+            ),
+            headerRight: () => (
+              <View>
+                <TouchableOpacity
+                  onPress={() => {
+                  
+                    navigation.replace('Messages');
                   }}
-              >
-                  <Image source={require('./assets/logout.png')} style={{ width: 20, height: 20, margin: 10 }} />
-              </TouchableOpacity>
-          ),
+                  style={{
+                    marginRight: 20,
+                  }}>
+                  <Image
+                    source={require('./assets/message.png')}
+                    style={{width: 20, height: 20}}
+                  />
+                </TouchableOpacity>
+              </View>
+            ),
           })}
         />
       </Stack.Navigator>
     </NavigationContainer>
-
   );
 }
 

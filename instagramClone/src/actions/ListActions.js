@@ -1,4 +1,4 @@
-import {LOCAL_STORY, SET_STORY, POST_STORY, SET_LIST} from './types';
+import {LOCAL_STORY, SET_STORY, POST_STORY, SET_LIST, UPDATE_LIST, LOCAL_LIST} from './types';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -18,8 +18,15 @@ export const postStory = (payload) => {
 
 export const getList= () => {
     return  async (dispatch) => {
-        let data = await AsyncStorage.getItem(LOCAL_STORY);
+        let data = await AsyncStorage.getItem(LOCAL_LIST);
         console.log('localdeki list', data);
         dispatch({type: SET_LIST, payload:  JSON.parse(data)});
       };
 };
+
+export const updateList = (payload) => {
+  return (dispatch) => {
+      dispatch({type: UPDATE_LIST, payload});
+    };
+};
+
