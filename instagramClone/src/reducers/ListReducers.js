@@ -7,54 +7,25 @@ import {
   LOCAL_LIST,
 } from '../actions/types';
 import AsyncStorage from '@react-native-community/async-storage';
+import list from '../data';
 
+let story = list.map((item) => ({
+  name: item.name,
+  storyImage: item.story && item.image,
+  _id: item._id,
+}))
+
+console.log(story);
 const INITIAL_STATE = {
-  list: [
-    {
-      image: require('../assets/feed_1.jpg'),
-      name: 'Sarah Wilson',
-      location: 'Winterland',
-      _id: '1',
-    },
-    {
-      image: require('../assets/feed_1.jpg'),
-      name: 'Name 2',
-      location: 'Summerland',
-      _id: '2',
-    },
-    {
-      image: require('../assets/feed_3.jpeg'),
-      name: 'Name 3',
-      location: '',
-      _id: '3',
-    },
-    {
-      image: require('../assets/feed_3.jpeg'),
-      name: 'Sarah Wilson',
-      location: 'Winterland',
-      _id: '4',
-    },
-    {
-      image: require('../assets/feed_3.jpeg'),
-      name: 'Sarah Wilson',
-      location: 'Winterland',
-      _id: '5',
-    },
-    {
-      image: require('../assets/feed_3.jpeg'),
-      name: 'Sarah Wilson',
-      location: 'Winterland',
-      _id: '6',
-    },
-  ],
-  stories: [],
+  list,
+  stories:  story,
 };
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case SET_STORY:
       return {
         ...state,
-        stories: action.payload, //check the data comes from local storage
+        stories: action.payload ? [...state.stories, action.payload] : state.stories, //why it doesnt work with &&, I dont belive defining as state.list is necessary as it shouldn't be go null from anywhere
       };
 
     case POST_STORY:
@@ -69,7 +40,7 @@ export default (state = INITIAL_STATE, action) => {
     case SET_LIST:
       return {
         ...state,
-        list: action.payload && [...state.list, action.payload], //check the data comes from local storage
+        list: action.payload ? [...state.list, action.payload] : state.list, //why it doesnt work with &&, I dont belive defining as state.list is necessary as it shouldn't be go null from anywhere
       };
 
     case UPDATE_LIST:

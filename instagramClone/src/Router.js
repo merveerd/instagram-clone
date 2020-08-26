@@ -98,7 +98,7 @@ function Router(props) {
           name="Feed"
           component={Home}
           options={({navigation, route}) => ({
-            headerTitle: (   <Image style={{alignSelf: 'center', width:120, height: 20}} source={require('./assets/instagram-text.png')}/>),
+            headerTitle: (   <Image style={{alignSelf: 'center', width:120, height: 40}} source={require('./assets/instagram-text.png')}/>),
             headerLeft: () => (
               <TouchableOpacity
                   onPress={() => {          
