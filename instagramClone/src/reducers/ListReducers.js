@@ -8,17 +8,25 @@ import {
 } from '../actions/types';
 import AsyncStorage from '@react-native-community/async-storage';
 import list from '../data';
+let allStories = [];
+let count = 0; //it would chage every time the id so dont look like it is a good approach
+list.forEach((item) => {
+  count++
+  if (item.hasStory) {
+  
+    allStories.push({
+      id: count,
+      name: item.name,
+      storyProfileImage: item.image,
+      storyImages : [],
 
-let story = list.map((item) => ({
-  name: item.name,
-  storyImage: item.story && item.image,
-  _id: item._id,
-}))
+    });
+  };
+});
 
-console.log(story);
 const INITIAL_STATE = {
   list,
-  stories:  story,
+  stories: allStories,
 };
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -44,7 +52,7 @@ export default (state = INITIAL_STATE, action) => {
       };
 
     case UPDATE_LIST:
-      console.log(action.payload);
+      console.log('update list',action.payload);
       let arr = state.list.slice();
       const obj = action.payload;
       arr.push(obj);

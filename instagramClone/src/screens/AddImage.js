@@ -6,7 +6,7 @@ import ImagePicker from 'react-native-image-picker';
 
 import {updateList} from '../actions';
 import {Button} from '../components';
-const Camera = (props) => {
+const AddImage = (props) => {
   const [image, setImage] = useState(null);
   return (
     <View> 
@@ -66,4 +66,4 @@ const mapStateToProps = ({listResponse}) => {
   return {list};
 };
 
-export default connect(mapStateToProps, {updateList})(Camera);
+export default connect(mapStateToProps, {updateList})(AddImage);

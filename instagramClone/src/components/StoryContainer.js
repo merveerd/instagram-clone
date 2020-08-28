@@ -2,16 +2,16 @@ import React from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import {StoryItem} from './StoryItem';
 
-const StoryContainer = ({stories, onStoryPress}) => {
+const StoryContainer = ({stories, userId}) => {
   //stories can be sent by global reducer connection but here, sent it in local way
 
   const renderStoryItem = ({item}) => {
-    const source = item.image && item.image;
     return (
-      <StoryItem 
-        onStoryPress={onStoryPress}// add name props
-        source= {source}
+      <StoryItem      
+        source= {item.storyProfileImage}
         defaultSource={require('../assets/dummy.png')}
+        name = {item.name}
+        userId = {item.id}
       ></StoryItem>
     );
   };
@@ -23,6 +23,7 @@ const StoryContainer = ({stories, onStoryPress}) => {
         style={styles.container}
         data={stories}
         renderItem={renderStoryItem}
+        keyExtractor = {(item, index)=> index.toString()}
       />
     </View>
   );

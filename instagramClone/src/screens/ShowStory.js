@@ -1,12 +1,12 @@
 import React from 'react';
 import {View, Text, Image} from 'react-native';
 
-const AddStory = (props) => {
-//rn camera will be added
+const ShowStory = (props) => {
+
     return <View>
-      <Text>AddS</Text>
+      <Text>Show Story {props.route.params.userId}</Text>
       {/* <Image source = {source}></Image> */}
     </View>
 }
 
-export default AddStory;
+export default ShowStory;

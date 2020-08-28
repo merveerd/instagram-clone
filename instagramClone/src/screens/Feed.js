@@ -3,26 +3,21 @@ import {View, Text, FlatList, Image, Dimensions} from 'react-native';
 import {connect} from 'react-redux';
 import {StoryContainer} from '../components';
 import {getList, getStory} from '../actions';
-
-import SignIn from './SignIn';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+
 const {width, height} = Dimensions.get('window');
+
 const Feed = (props) => {
   useEffect(() => {
-    console.log('home');
-    console.log('list', props.list);
-    console.log('stories'. stories)
-    props.getList();
 
-    props.getStory();
+    props.getList();
+    props.getStory(); //can me move on showStory but if they will be shown according to their time, it should be loaded here
   }, []);
 
-  const onStoryPress = async () => { props.navigation.navigate('Story') };
-
+  
   renderHeader = () => {
-    return <StoryContainer stories= {props.stories} onStoryPress={onStoryPress} />;
+    return <StoryContainer stories= {props.stories} />;
   };
-
 
   const renderItem1 = ({item}) => {
     const source = item.image && item.image;
@@ -39,6 +34,7 @@ const Feed = (props) => {
           <Image
             source={source}
             style={{marginRight: 10, height: 30, width: 30, borderRadius: 50}}
+            
           />
           <View
             style={{
@@ -83,7 +79,7 @@ const Feed = (props) => {
           style={{flex: 5}}
           data={props.list}
           renderItem={renderItem1}
-          keyExtractor={(item) => item._id}
+          keyExtractor={(item, index) =>  index.toString()}
         />
       </View>
     </View>

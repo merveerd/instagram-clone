@@ -2,20 +2,18 @@ import React from 'react';
 import {TouchableOpacity, Image, View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-
-import {LOCAL_AUTH_ID, USER} from './actions/types';
-import AsyncStorage from '@react-native-community/async-storage';
 
 import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
 import Feed from './screens/Feed';
-import Camera from './screens/Camera';
+import AddImage from './screens/AddImage';
+import AddStory from './screens/AddStory';
+import ShowStory from './screens/ShowStory';
 import Messages from './screens/Messages';
 import Profile from './screens/Profile';
 import {navigationRef} from './RootNavigation';
-import ImagePicker from 'react-native-image-picker';
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -24,13 +22,12 @@ const customTabBarStyle = {
   tabStyle: { marginTop: 10 }, //?
 }
 
-
 function Home() {
   return (
     <Tab.Navigator tabBarOptions={customTabBarStyle}>
       <Tab.Screen name="Feed" component={Feed} />
-      <Tab.Screen name = "Camera" component = {Feed} options={{
-  tabBarButton: () => (<Camera />)}} />
+      <Tab.Screen name = "AddImage" component = {Feed} options={{
+  tabBarButton: () => (<AddImage />)}} />
 
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
@@ -45,7 +42,7 @@ function Router(props) {
           name="Messages"
           component={Messages}
           options={({navigation, route}) => ({
-            title: 'Messages',
+            title: 'All Messages',
             headerLeft: ()=> (
               <TouchableOpacity
               onPress={() => {
@@ -60,26 +57,7 @@ function Router(props) {
             )
           })}
         />
-         {/* <Stack.Screen
-          name="Profile"
-          component={Profile}
-          options={({navigation, route}) => ({
-            title: 'Profile',
-            // headerLeft: ()=> (
-            //   <TouchableOpacity
-            //   onPress={() => {
-            //     AsyncStorage.removeItem(LOCAL_AUTH_ID);
-            //     navigation.replace('SignIn');
-                
-            //   }}
-            //   style={{
-            //     marginRight: 20,
-            //   }}>
-            //  <Text style ={{fontSize: 30, marginLeft: 10}}>{'<'} </Text>
-            // </TouchableOpacity>
-            // )
-          })}
-        /> */}
+
         <Stack.Screen
           name="SignIn"
           component={SignIn}
@@ -94,6 +72,20 @@ function Router(props) {
             title: 'Sign Up',
           })}
         />
+             <Stack.Screen
+          name="AddStory"
+          component={AddStory}
+          options={({navigation, route}) => ({
+            title: 'Add Story',
+          })}
+        />
+                <Stack.Screen
+          name="ShowStory"
+          component={ShowStory}
+          options={({navigation, route}) => ({
+           
+          })}
+        />
         <Stack.Screen
           name="Feed"
           component={Home}
@@ -102,7 +94,7 @@ function Router(props) {
             headerLeft: () => (
               <TouchableOpacity
                   onPress={() => {          
-                    //imagePicker
+                    navigation.replace('AddStory'); //header title does not go off
                   }}
                   style={{
                     marginRight: 20,
@@ -138,3 +130,4 @@ function Router(props) {
 }
 
 export default Router;
+
